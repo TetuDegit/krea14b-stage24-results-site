@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Krea Realtime Video 14B 的七种方法、六组配对场景、42 条原始视频与完整 24 样本评分。">
+  <title>Krea 14B · 七种方法视频对照</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#viewer">跳到视频对照</a>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-mark">K</span><span>Krea 14B <small>实验观察室</small></span></a>
+    <nav aria-label="主导航"><a href="#viewer">视频对照</a><a href="#scores">评分</a><a href="#protocol">实验口径</a><a href="https://github.com/TetuDegit/krea14b-stage24-results-site" target="_blank" rel="noopener">GitHub ↗</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow"><span class="signal"></span> KREA REALTIME VIDEO 14B / 2× SPATIAL STUDY</p>
+      <h1>同一场景，<br><em>七种生成方式。</em></h1>
+      <p class="lead">把插值、论文方法的 Krea 适配和新的记忆探索放到一起。用同一组提示词与 seed，观察 20 秒里细节、结构和运动如何变化。</p>
+      <div class="facts"><div><strong>07</strong><span>方法 G0—G6</span></div><div><strong>06</strong><span>配对展示场景</span></div><div><strong>42</strong><span>原始 MP4</span></div><div><strong>24 <small>/ 方法</small></strong><span>完整评分样本</span></div></div>
+      <div class="hero-note"><span>1664 × 960</span><span>16 fps</span><span>20 秒 · 320 帧</span><span>阶段最终版本 / 2026.10</span></div>
+    </section>
+
+    <section id="viewer" class="viewer section" aria-labelledby="viewer-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / WATCH & COMPARE</p><h2 id="viewer-title">先看画面，再读分数。</h2></div><p>六组固定案例，每种方法展示同样的六条。<br>原视频直接播放，未为网页再次转码。</p></div>
+      <div class="view-tabs" role="group" aria-label="观看方式">
+        <button id="compare-tab" type="button" class="active" aria-pressed="true" aria-controls="compare-view">同场景并排对照</button>
+        <button id="gallery-tab" type="button" aria-pressed="false" aria-controls="gallery-view">按方法看六条</button>
+      </div>
+      <div id="compare-view">
+        <div class="panel selection-panel">
+          <div class="field-heading"><span class="field-label">选择场景</span><span id="scene-counter" class="muted">01 / 06</span></div>
+          <div id="cases" class="case-buttons" role="group" aria-label="选择配对场景"></div>
+          <div class="prompt-row"><div><span class="field-label">固定提示词</span><p id="case-prompt" class="prompt"></p></div><span id="case-seed" class="mono muted"></span></div>
+          <div class="method-heading"><span class="field-label">选择方法</span><span class="muted">最多三种并排；取消一组后可选择其它方法。</span></div>
+          <div id="methods" class="method-buttons" role="group" aria-label="选择比较方法"></div>
+        </div>
+        <div class="panel transport-panel">
+          <div class="transport-main">
+            <button id="play" class="primary" type="button" disabled>▶ 同步播放</button>
+            <button id="pause" type="button" disabled>暂停</button>
+            <button id="restart" type="button" disabled>回到开头</button>
+            <label class="speed-label" for="speed">速度 <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+          </div>
+          <div class="seek-row"><label for="seek">共同时间 <output id="time">00:00 / 00:20</output></label><input id="seek" aria-label="共同播放时间" type="range" min="0" max="320" step="1" value="0" disabled></div>
+          <div class="segments" role="group" aria-label="跳转固定时间"><button type="button" data-time="0">0 秒</button><button type="button" data-time="5">5 秒</button><button type="button" data-time="10">10 秒</button><button type="button" data-time="15">15 秒</button></div>
+          <p id="status" class="status" role="status">正在读取展示资料…</p>
+          <p class="sync-note">同步为浏览器层面的近似同步。播放中一条缓冲时会暂停全部，就绪后点击“同步播放”继续。</p>
+        </div>
+        <div id="cards" class="comparison-cards"></div>
+      </div>
+      <div id="gallery-view" hidden>
+        <div class="panel gallery-selector"><label for="gallery-method"><span class="field-label">浏览某一种方法的全部六条</span><select id="gallery-method"></select></label><p id="gallery-description"></p></div>
+        <div id="gallery-cards" class="gallery-cards"></div>
+        <p class="muted">此视图逐条播放。需要同场景同步比较时，切回“同场景并排对照”。</p>
+      </div>
+      <div class="selection-note"><span class="field-label">案例怎样选</span><p id="selection-policy">按场景分层选择，未按分数或画质挑选。</p></div>
+    </section>
+
+    <section id="scores" class="scores section" aria-labelledby="scores-title">
+      <div class="section-heading"><div><p class="eyebrow">02 / FULL STAGE24 RESULTS</p><h2 id="scores-title">评分用的是完整 24 条。</h2></div><p>展示六条，评分二十四条。<br>七组各 24 × 6 项有效分数，无缺项。</p></div>
+      <div class="score-callout"><div><span class="field-label">六维等权均分最高</span><strong>G6 <span id="top-score">79.28</span></strong></div><p id="score-explanation">G6 的领先主要来自更多视频达到动态检测阈值，不能直接解释为所有画质维度更好。</p></div>
+      <div class="panel score-chart-panel"><div class="chart-heading"><h3>按指标比较</h3><label for="metric" class="visually-hidden">选择评分指标</label><select id="metric"><option value="total">六维综合分</option></select></div><ol id="score-chart" class="score-chart" aria-label="方法评分柱状比较"></ol><p id="metric-note" class="muted"></p></div>
+      <div class="table-wrap panel"><table><caption>七种方法的完整 24 样本均值，统一将原始归一化分数乘以 100。</caption><thead><tr><th scope="col">方法</th><th scope="col">综合分</th><th scope="col">主体一致</th><th scope="col">背景一致</th><th scope="col">运动平滑</th><th scope="col">动态程度</th><th scope="col">美学质量</th><th scope="col">成像质量</th></tr></thead><tbody id="score-body"></tbody></table></div>
+      <div class="score-reading"><p><strong>动态程度是二元检测的通过比例。</strong>单条视频达到运动阈值记 1，否则记 0。未达阈值不等于完全静止；达到阈值也不保证动作合理。高平滑度同样不代表运动充分。</p><p>综合分是项目自定义的六维等权平均，<strong>不是官方 VBench 总分</strong>。这批结果不能单独确认模糊、重影、接缝、结构错误或冻结是否得到解决。</p></div>
+      <div class="text-links"><a href="data/scores.csv" download>下载评分表 CSV ↓</a><a href="media_checksums.tsv" download>视频校验清单 ↓</a><a href="https://github.com/TetuDegit/krea14b-stage24-results-site/releases/tag/stage24-20261018-v1" target="_blank" rel="noopener">全部 42 条原视频 ↗</a></div>
+    </section>
+
+    <section id="protocol" class="section protocol" aria-labelledby="protocol-title">
+      <div><p class="eyebrow">03 / READING THE EXPERIMENT</p><h2 id="protocol-title">比较的边界</h2><p class="muted">这一轮是 G0—G6 阶段测试。<br>与之前的 E 系列展示独立。</p></div>
+      <div class="protocol-content">
+        <div><h3>同一批输入</h3><p>每种方法使用相同的 24 个 prompt/seed，各生成 24 条视频；每条仅一个 seed。G0—G3 共用同一份 1× 基础生成。网页展示其中六组配对案例，均为宽 1664、高 960 的 20 秒最终输出。</p></div>
+        <div><h3>方法适配与记忆</h3><p>G1、G2、G3 分别是 CineScale、FreeSwim、SuperGen 在 Krea 五步因果生成上的适配，不能视为原论文的数值等价复现。G5 为当前 v3。G6 同时改变了缓存容量、历史更新和 RoPE，仍保留初始块的 sink，不能把结果仅归因于 EMA 或“移除首帧”。</p></div>
+        <div><h3>评分预处理</h3><p>评价使用完整原视频。背景一致性和美学质量的 CLIP 输入采用整帧缩放到 224×224 的项目定制路径，保留两侧内容但改变宽高比；其它维度采用各自预处理。这轮未将旧试运行、分段、裁剪或 VBench-Long 分数混入。</p></div>
+        <div><h3>画面仍需要看</h3><p>数值排名只对应本轮样本均值，不构成跨 seed 或统计显著性结论。比较时同时观察主体、纹理、色彩、边界与真实运动，并检查后半段。这里展示的是原始生成结果，未做修复或画质增强。</p></div>
+      </div>
+    </section>
+  </main>
+  <footer><a class="brand footer-brand" href="./">Krea 14B <small>七种方法阶段对照</small></a><p>研究结果展示 · 2026 年 10 月<br>网页与选定视频均公开可访问。</p><a href="https://tetudegit.github.io/krea-resolution-extrapolation-site/" target="_blank" rel="noopener">此前 E 系列实验 ↗</a></footer>
+  <noscript><p class="noscript">启用 JavaScript 可使用视频对照与评分表。也可直接在本页链接的 GitHub Release 下载全部展示视频。</p></noscript>
+</body>
+</html>

@@ -1,0 +1,11 @@
+*.mp4
+*.mkv
+*.safetensors
+*.pt
+*.pth
+node_modules/
+.env*
+.rsync-partial/
+media/
+private/
+*.log
